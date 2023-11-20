@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <h1>Encryptor</h1>
+        <div>
+            <input id="encrypt-text" type="text" placeholder="Enter the text..."></input>
+            <button onclick="sendrequest()">Encrypt</button>
+            <div id = "result">Results :  </div>
+        </div>
+    </div>
+    <script>
+        const sendrequest = () =>{
+            const text = document.getElementById("encrypt-text").value;
+            const apiUrl = `http://localhost:3000/encrypt?email=${text}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status}`);
+                    }
+                    console.log(response)
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('API Response:', data.encrypted);
+                    document.getElementById("result").innerText =  "Results : "+data.encrypted
+                })
+                .catch(error => {
+                    console.error('Error during API request:', error);
+                });
+                }
+    </script>
+</body>
+</html>
